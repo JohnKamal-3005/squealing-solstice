@@ -1,23 +1,225 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Nexus Tic-Tac-Toe | Futuristic Strategy Game",
+	description = "Experience next-generation Tic-Tac-Toe with intelligent AI (Minimax), Infinity Vanishing Mode, Blitz Timer, customizable themes, and rich sound effects."
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="cyber-neon">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="icon" type="image/jpeg" href="/logo.jpg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		
+		<!-- SEO & Metadata -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#0a0b10" />
+		<meta name="keywords" content="tic tac toe, minimax ai, infinity tic tac toe, blitz timer, online board game, strategy game, cyberpunk game" />
+		
+		<!-- Open Graph / Social Sharing -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="/logo.jpg" />
+
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
-	body {
+<style is:global>
+	:root {
+		/* Base Fonts */
+		--font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		--font-display: 'Space Grotesk', var(--font-main);
+
+		/* Common Animation Curves */
+		--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+		--ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	/* Theme: Cyber Neon (Default) */
+	[data-theme="cyber-neon"] {
+		--bg-base: #08090f;
+		--bg-surface: rgba(16, 21, 35, 0.7);
+		--bg-surface-elevated: rgba(23, 30, 52, 0.85);
+		--bg-glass-card: rgba(14, 18, 30, 0.65);
+		--border-color: rgba(0, 240, 255, 0.22);
+		--border-color-glow: rgba(0, 240, 255, 0.6);
+		--border-subtle: rgba(255, 255, 255, 0.08);
+		
+		--text-primary: #f0f6fc;
+		--text-secondary: #94a3b8;
+		--text-muted: #64748b;
+
+		--color-x: #00f0ff;
+		--color-x-glow: 0 0 25px rgba(0, 240, 255, 0.75), 0 0 50px rgba(0, 240, 255, 0.35);
+		--color-x-bg: rgba(0, 240, 255, 0.12);
+
+		--color-o: #ff007f;
+		--color-o-glow: 0 0 25px rgba(255, 0, 127, 0.75), 0 0 50px rgba(255, 0, 127, 0.35);
+		--color-o-bg: rgba(255, 0, 127, 0.12);
+
+		--color-accent: #00f0ff;
+		--color-win: #ffe600;
+		--color-win-glow: 0 0 30px rgba(255, 230, 0, 0.8);
+		
+		--mesh-gradient-1: radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.15) 0%, transparent 45%);
+		--mesh-gradient-2: radial-gradient(circle at 85% 80%, rgba(255, 0, 127, 0.15) 0%, transparent 50%);
+		--mesh-gradient-3: radial-gradient(circle at 50% 50%, rgba(112, 0, 255, 0.08) 0%, transparent 60%);
+	}
+
+	/* Theme: Solar Sunset */
+	[data-theme="solar-sunset"] {
+		--bg-base: #0d0a14;
+		--bg-surface: rgba(28, 18, 38, 0.7);
+		--bg-surface-elevated: rgba(38, 25, 52, 0.85);
+		--bg-glass-card: rgba(22, 14, 32, 0.65);
+		--border-color: rgba(255, 140, 0, 0.25);
+		--border-color-glow: rgba(255, 140, 0, 0.65);
+		--border-subtle: rgba(255, 255, 255, 0.08);
+
+		--text-primary: #fff1f2;
+		--text-secondary: #fbcfe8;
+		--text-muted: #9d7b92;
+
+		--color-x: #ff9e00;
+		--color-x-glow: 0 0 25px rgba(255, 158, 0, 0.75), 0 0 50px rgba(255, 158, 0, 0.35);
+		--color-x-bg: rgba(255, 158, 0, 0.12);
+
+		--color-o: #ff0055;
+		--color-o-glow: 0 0 25px rgba(255, 0, 85, 0.75), 0 0 50px rgba(255, 0, 85, 0.35);
+		--color-o-bg: rgba(255, 0, 85, 0.12);
+
+		--color-accent: #ff9e00;
+		--color-win: #00f5d4;
+		--color-win-glow: 0 0 30px rgba(0, 245, 212, 0.8);
+
+		--mesh-gradient-1: radial-gradient(circle at 10% 25%, rgba(255, 158, 0, 0.15) 0%, transparent 45%);
+		--mesh-gradient-2: radial-gradient(circle at 90% 75%, rgba(255, 0, 85, 0.15) 0%, transparent 50%);
+		--mesh-gradient-3: radial-gradient(circle at 50% 50%, rgba(123, 44, 191, 0.08) 0%, transparent 60%);
+	}
+
+	/* Theme: Emerald Matrix */
+	[data-theme="emerald-matrix"] {
+		--bg-base: #060d0a;
+		--bg-surface: rgba(12, 28, 20, 0.7);
+		--bg-surface-elevated: rgba(18, 40, 28, 0.85);
+		--bg-glass-card: rgba(9, 21, 15, 0.65);
+		--border-color: rgba(0, 255, 157, 0.25);
+		--border-color-glow: rgba(0, 255, 157, 0.65);
+		--border-subtle: rgba(255, 255, 255, 0.08);
+
+		--text-primary: #ecfdf5;
+		--text-secondary: #a7f3d0;
+		--text-muted: #6ee7b788;
+
+		--color-x: #00ff9d;
+		--color-x-glow: 0 0 25px rgba(0, 255, 157, 0.75), 0 0 50px rgba(0, 255, 157, 0.35);
+		--color-x-bg: rgba(0, 255, 157, 0.12);
+
+		--color-o: #b5179e;
+		--color-o-glow: 0 0 25px rgba(181, 23, 158, 0.75), 0 0 50px rgba(181, 23, 158, 0.35);
+		--color-o-bg: rgba(181, 23, 158, 0.12);
+
+		--color-accent: #00ff9d;
+		--color-win: #ffd166;
+		--color-win-glow: 0 0 30px rgba(255, 209, 102, 0.8);
+
+		--mesh-gradient-1: radial-gradient(circle at 20% 20%, rgba(0, 255, 157, 0.14) 0%, transparent 45%);
+		--mesh-gradient-2: radial-gradient(circle at 80% 80%, rgba(181, 23, 158, 0.14) 0%, transparent 50%);
+		--mesh-gradient-3: radial-gradient(circle at 50% 50%, rgba(6, 78, 59, 0.12) 0%, transparent 60%);
+	}
+
+	/* Theme: Frosted Luxury */
+	[data-theme="frosted-luxury"] {
+		--bg-base: #070913;
+		--bg-surface: rgba(255, 255, 255, 0.05);
+		--bg-surface-elevated: rgba(255, 255, 255, 0.09);
+		--bg-glass-card: rgba(255, 255, 255, 0.04);
+		--border-color: rgba(255, 255, 255, 0.14);
+		--border-color-glow: rgba(56, 189, 248, 0.6);
+		--border-subtle: rgba(255, 255, 255, 0.06);
+
+		--text-primary: #ffffff;
+		--text-secondary: #cbd5e1;
+		--text-muted: #64748b;
+
+		--color-x: #38bdf8;
+		--color-x-glow: 0 0 25px rgba(56, 189, 248, 0.75), 0 0 50px rgba(56, 189, 248, 0.35);
+		--color-x-bg: rgba(56, 189, 248, 0.12);
+
+		--color-o: #f43f5e;
+		--color-o-glow: 0 0 25px rgba(244, 63, 94, 0.75), 0 0 50px rgba(244, 63, 94, 0.35);
+		--color-o-bg: rgba(244, 63, 94, 0.12);
+
+		--color-accent: #38bdf8;
+		--color-win: #a855f7;
+		--color-win-glow: 0 0 30px rgba(168, 85, 247, 0.8);
+
+		--mesh-gradient-1: radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%);
+		--mesh-gradient-2: radial-gradient(circle at 85% 85%, rgba(244, 63, 94, 0.12) 0%, transparent 50%);
+		--mesh-gradient-3: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+	}
+
+	*, *::before, *::after {
+		box-sizing: border-box;
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+	}
+
+	html {
+		font-family: var(--font-main);
+		background-color: var(--bg-base);
+		color: var(--text-primary);
+		min-height: 100%;
+		overflow-x: hidden;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		transition: background-color 0.4s ease, color 0.4s ease;
+	}
+
+	body {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		overflow-x: hidden;
+		background: 
+			var(--mesh-gradient-1),
+			var(--mesh-gradient-2),
+			var(--mesh-gradient-3),
+			var(--bg-base);
+		background-attachment: fixed;
+	}
+
+	/* Scrollbar Styling */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: var(--bg-base);
+	}
+	::-webkit-scrollbar-thumb {
+		background: var(--border-color);
+		border-radius: 4px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--color-accent);
 	}
 </style>
